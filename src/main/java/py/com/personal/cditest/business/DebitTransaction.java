@@ -1,6 +1,8 @@
 package py.com.personal.cditest.business;
 
 
+import py.com.personal.cditest.business.dao.CuentaDAO;
+import py.com.personal.cditest.business.dao.CuentaPorUsuarioDAO;
 import py.com.personal.cditest.business.dao.Database;
 import py.com.personal.cditest.model.Cuenta;
 import py.com.personal.cditest.model.Usuario;
@@ -16,16 +18,20 @@ public class DebitTransaction implements Transaction{
     LoginInfo loginInfo;
 
     @Inject
-    Database database;
+    CuentaDAO cuentaDAO;
+
+    @Inject
+    CuentaPorUsuarioDAO cuentaPorUsuarioDAO;
 
     @RequiresPermission({"Permiso1", "Permiso2"})
+    public void apply(Integer monto, int idCuenta) throws Exception {
+        Cuenta cuenta = cuentaDAO.restarACuenta(monto, idCuenta);
+        System.out.println("Se hace credito, saldo final " + cuenta.getSaldo());
+    }
+
     public void apply(Integer monto) throws Exception {
         Usuario u = loginInfo.getLoggedUser();
-        Cuenta cuenta = database.getCuentaByUsername(u.getUsername());
-        if(cuenta.getSaldo()<monto){
-            throw new Exception("No hay saldo suficiente para ejecutar transaccion de debito");
-        }
-        cuenta.setSaldo(cuenta.getSaldo() - monto);
-        System.out.println("Se hace debito, saldo final " + cuenta.getSaldo());
+        Cuenta cuenta = cuentaPorUsuarioDAO.restarACuenta(u.getUsername(), monto);
+        System.out.println("Se hace credito, saldo final " + cuenta.getSaldo());
     }
 }

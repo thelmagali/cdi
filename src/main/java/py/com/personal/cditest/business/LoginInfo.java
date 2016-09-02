@@ -1,11 +1,12 @@
 package py.com.personal.cditest.business;
 
+import org.jboss.weld.environment.se.contexts.ThreadScoped;
 import py.com.personal.cditest.model.Usuario;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 
-@ApplicationScoped
+@ThreadScoped
 public class LoginInfo {
 
     private Boolean sessionActive;
