@@ -9,5 +9,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface RequiresPermission {
 
-    String[] value() default {};
+    int[] value() default {};
 }

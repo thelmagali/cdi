@@ -1,17 +1,10 @@
 package py.com.personal.cditest.model;
 
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class Usuario {
 
     private String username;
     private String password;
     private String token;
-
-    private List<String> permissions = new ArrayList<String>();
-
 
     public String getUsername() {
         return username;
@@ -29,13 +22,6 @@ public class Usuario {
         this.password = password;
     }
 
-    public List<String> getPermissions() {
-        return permissions;
-    }
-
-    public void setPermissions(List<String> permissions) {
-        this.permissions = permissions;
-    }
 
 	public String getToken() {
 		return token;

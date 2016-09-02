@@ -14,7 +14,7 @@ public class AuthenticationBusiness {
     @Inject
     LoginInfo loginInfo;
 
-    public void login(String username, String password) throws Exception{
+    public String login(String username, String password) throws Exception{
         if(loginInfo.getSessionActive()){
             throw new Exception("No se puede loguear, existe una sesion activa");
         }
@@ -29,11 +29,12 @@ public class AuthenticationBusiness {
             }
             loginInfo.setSessionActive(true);
             loginInfo.setLoggedUser(u);
-            u.setToken(UUID.randomUUID().toString());
+            String token = UUID.randomUUID().toString();
+            u.setToken(token);
+            return token;
         }else{
             throw new Exception("Contrasenha invalida;");
         }
-
     }
 
     public void logout(){

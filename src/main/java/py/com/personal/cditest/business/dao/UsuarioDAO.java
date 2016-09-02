@@ -28,7 +28,15 @@ public class UsuarioDAO {
 
 			}
 		}
-
 		return found;
+	}
+
+	public Usuario getUserByToken(String token) throws Exception {
+		for (Usuario usuario: database.getUsuarios()){
+			if(token.equals(usuario.getToken())){
+				return usuario;
+			}
+		}
+		throw new Exception("Token no válido.");
 	}
 }

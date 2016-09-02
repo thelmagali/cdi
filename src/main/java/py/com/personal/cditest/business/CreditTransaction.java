@@ -23,15 +23,16 @@ public class CreditTransaction implements Transaction{
     @Inject
     CuentaPorUsuarioDAO cuentaPorUsuarioDAO;
 
-    @RequiresPermission({"Permiso5", "Permiso6"})
+    @RequiresPermission({5, 6})
     public void apply(Integer monto, int idCuenta) throws Exception {
-        Cuenta cuenta = cuentaDAO.restarACuenta(monto, idCuenta);
+        Cuenta cuenta = cuentaDAO.sumarACuenta(monto, idCuenta);
 	    System.out.println("Se hace credito, saldo final " + cuenta.getSaldo());
     }
 
+    @RequiresPermission({5, 6})
     public void apply(Integer monto) throws Exception {
         Usuario u = loginInfo.getLoggedUser();
-        Cuenta cuenta = cuentaPorUsuarioDAO.restarACuenta(u.getUsername(), monto);
+        Cuenta cuenta = cuentaPorUsuarioDAO.sumarACuenta(u.getUsername(), monto);
         System.out.println("Se hace credito, saldo final " + cuenta.getSaldo());
     }
 }

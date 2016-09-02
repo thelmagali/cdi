@@ -23,12 +23,13 @@ public class DebitTransaction implements Transaction{
     @Inject
     CuentaPorUsuarioDAO cuentaPorUsuarioDAO;
 
-    @RequiresPermission({"Permiso1", "Permiso2"})
+    @RequiresPermission({1, 2})
     public void apply(Integer monto, int idCuenta) throws Exception {
         Cuenta cuenta = cuentaDAO.restarACuenta(monto, idCuenta);
         System.out.println("Se hace credito, saldo final " + cuenta.getSaldo());
     }
 
+    @RequiresPermission({1, 2})
     public void apply(Integer monto) throws Exception {
         Usuario u = loginInfo.getLoggedUser();
         Cuenta cuenta = cuentaPorUsuarioDAO.restarACuenta(u.getUsername(), monto);
